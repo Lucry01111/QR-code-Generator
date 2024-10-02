@@ -30,7 +30,7 @@ def generate_qr_code(data):
         # Combine the file name and extension
         full_filename = filename + file_ext
         # Specific path for saving
-        save_path = os.path.join(r'C:\Users\lucre\Documents\Codici Vari\Python\QR code', full_filename)
+        save_path = os.path.join(r'path', full_filename)
 
         # Save the QR code image
         img.save(save_path)

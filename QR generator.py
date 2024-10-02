@@ -1,8 +1,8 @@
 import qrcode
 from PIL import Image
+import os
 
 def generate_qr_code(data):
-    # Crea il QR code
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -12,22 +12,30 @@ def generate_qr_code(data):
     qr.add_data(data)
     qr.make(fit=True)
 
-    # Crea l'immagine del QR code
+    # Create the QR code image
     img = qr.make_image(fill='black', back_color='white')
-
-    # Mostra l'immagine del QR code a schermo
     img.show()
 
-    # Chiedi se l'utente vuole scaricare l'immagine
-    save_option = input("Vuoi scaricare il QR code? (s/n): ")
+    save_option = input("Do you want to download the QR code? (y/n): ")
 
-    if save_option.lower() == 's':
-        # Chiedi il nome del file
-        filename = input("Inserisci il nome del file (esempio: my_qr_code.png): ")
-        img.save(filename)
-        print(f"QR code salvato come {filename}")
+    if save_option.lower() == 'y':
+        filename = input("Enter the file name (without extension, e.g., my_qr_code): ")
+        valid_extensions = ['.png', '.jpg', '.jpeg']
+        file_ext = input("Enter the desired extension (.png, .jpg, .jpeg): ").lower()
+
+        # If the extension is not valid, use '.png' as default
+        if file_ext not in valid_extensions:
+            print("Invalid extension, using '.png' by default.")
+            file_ext = '.png'
+        # Combine the file name and extension
+        full_filename = filename + file_ext
+        # Specific path for saving
+        save_path = os.path.join(r'C:\Users\lucre\Documents\Codici Vari\Python\QR code', full_filename)
+
+        # Save the QR code image
+        img.save(save_path)
+        print(f"QR code saved as {save_path}")
     else:
-        print("QR code non salvato.")
-
-# Genera un QR code con dati personalizzati
-generate_qr_code("https://www.example.com")
+        print("QR code not saved.")
+data = input("Enter the link for the QR code: ")
+generate_qr_code(data)
